@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const userRegistrationSchema = require("../validation/user");
 const createError = require("http-errors");
+const jwt = require("jsonwebtoken");
 
 const User = require("../models/user");
 
@@ -35,8 +36,30 @@ exports.register = async (req, res, next) => {
     return next(error);
   }
 };
-exports.login = (req, res, next) => {
-  res.json({ user: "login here" });
+exports.login = async (req, res, next) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      throw createError.NotFound("Email not found");
+    }
+
+    const valid = await bcrypt.compare(password, user.password);
+
+    if (!valid) {
+      throw createError.BadRequest("Invalid Credentials");
+    }
+
+    const access_token = await jwt.sign(
+      { id: user._id, username: user.username },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "30m" }
+    );
+    res.json({ access_token });
+  } catch (error) {
+    return next(error);
+  }
 };
 exports.logout = (req, res, next) => {
   res.json({ user: "logout here" });
