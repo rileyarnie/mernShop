@@ -26,6 +26,6 @@ exports.createProduct = async (req, res, next) => {
     res.status(201).json(savedProduct);
   } catch (error) {
     error.isJoi ? (error.status = 400) : "";
-    next(error);
+    return next(error);
   }
 };
