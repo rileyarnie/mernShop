@@ -28,9 +28,15 @@ exports.register = async (req, res, next) => {
     }
 
     const savedUser = await user.save();
-    res
-      .status(201)
-      .json({ username: savedUser.username, email: savedUser.email });
+    const access_token = await jwt.sign(
+      {
+        id: savedUser._id,
+        username: savedUser.username,
+      },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "30m" }
+    );
+    res.status(201).json({ access_token });
   } catch (error) {
     error.isJoi ? (error.status = 400) : "";
     return next(error);
@@ -38,11 +44,10 @@ exports.register = async (req, res, next) => {
 };
 exports.login = async (req, res, next) => {
   const { email, password } = req.body;
-
   try {
     const user = await User.findOne({ email });
     if (!user) {
-      throw createError.NotFound("Email not found");
+      throw createError.BadRequest("Invalid Credentials");
     }
 
     const valid = await bcrypt.compare(password, user.password);
@@ -56,7 +61,7 @@ exports.login = async (req, res, next) => {
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "30m" }
     );
-    res.json({ access_token });
+    res.status(200).json({ access_token });
   } catch (error) {
     return next(error);
   }
