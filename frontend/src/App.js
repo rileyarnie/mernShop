@@ -5,6 +5,9 @@ import ProductList from "./components/ProductList";
 import { Container } from "react-bootstrap";
 import { Route, Switch } from "react-router-dom";
 import ProductDetails from "./components/ProductDetails";
+import Login from "./components/Login";
+import SignUp from "./components/SignUp";
+
 function App() {
   return (
     <div className="App">
@@ -12,6 +15,8 @@ function App() {
       <Container>
         <Switch>
           <Route exact component={ProductList} path="/" />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={SignUp} />
           <Route exact path="/products/:id" component={ProductDetails} />
         </Switch>
       </Container>
