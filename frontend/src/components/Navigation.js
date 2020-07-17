@@ -23,9 +23,38 @@ export class Navigation extends Component {
               >
                 Home
               </Link>
+              {this.props.isAuthenticated ? (
+                <p
+                  onClick={this.props.handleLogout}
+                  className="mr-4"
+                  style={{ textDecoration: "none", cursor: "pointer" }}
+                >
+                  Logout
+                </p>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    className="mr-4"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    Login
+                  </Link>
+
+                  <Link
+                    to="/register"
+                    className="mr-4"
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    Register
+                  </Link>
+                </>
+              )}
+
               <Link
                 to="/cart"
                 style={{ textDecoration: "none", color: "black" }}
+                
               >
                 <img
                   src="https://img.icons8.com/pastel-glyph/24/000000/shopping-cart.png"
