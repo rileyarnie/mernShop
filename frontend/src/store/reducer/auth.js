@@ -15,7 +15,7 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        token: action.payload.access_token,
+        token: action.payload,
         loading: false,
         error: null,
       };
@@ -28,8 +28,7 @@ const authReducer = (state = initialState, action) => {
         error: action.payload.error,
       };
     case actionTypes.AUTH_LOGOUT:
-      return state;
-
+      return initialState
     default:
       return state;
   }
