@@ -15,6 +15,7 @@ class Login extends Component {
     const { email, password, username } = this.state;
     event.preventDefault();
     this.props.handleSignUp(username, email, password);
+    this.props.history.push("/login");
   };
 
   handleEmailChange = (event) => {

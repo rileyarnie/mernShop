@@ -14,7 +14,7 @@ class Login extends Component {
     const { email, password } = this.state;
     event.preventDefault();
     this.props.handleLogin(email, password);
-    console.log(this.state);
+    this.props.history.push("/");
   };
 
   handleEmailChange = (event) => {
@@ -80,6 +80,12 @@ class Login extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    isAuthenticated: state.authReducer.isAuthenticated,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     handleLogin: (email, password) =>
@@ -87,4 +93,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
