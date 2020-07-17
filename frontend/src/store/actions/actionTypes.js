@@ -37,6 +37,13 @@ export const addToCart = (item) => {
   };
 };
 
+export const removeFromCart = (item, index) => {
+  return {
+    type: actionTypes.REMOVE_FROM_CART,
+    payload: { item, index },
+  };
+};
+
 export const authSignup = (username, email, password) => (dispatch) => {
   dispatch(authStart());
   axios

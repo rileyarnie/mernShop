@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Table, Button } from "react-bootstrap";
+import * as actionTypes from "../store/actions/actionTypes";
 
 class Cart extends Component {
   render() {
@@ -16,6 +17,7 @@ class Cart extends Component {
                 <tr>
                   <th>#</th>
                   <th>Product Name</th>
+                  <th></th>
                   <th>Price</th>
                 </tr>
               </thead>
@@ -24,11 +26,19 @@ class Cart extends Component {
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td style={{ textAlign: "left" }}>{item.name}</td>
+                    <td>
+                      <img
+                        style={{ cursor: "pointer" }}
+                        onClick={() => this.props.removeItem(item, index)}
+                        src="https://img.icons8.com/small/16/000000/filled-trash.png"
+                        alt="remove"
+                      />
+                    </td>
                     <td>{item.price}</td>
                   </tr>
                 ))}
                 <tr>
-                  <td colSpan="2">Total Price</td>
+                  <td colSpan="3">Total Price</td>
                   <td>{this.props.price}</td>
                 </tr>
               </tbody>
@@ -47,4 +57,11 @@ const mapStateToProps = (state) => {
     price: state.productReducer.cart.totalPrice,
   };
 };
-export default connect(mapStateToProps)(Cart);
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    removeItem: (item, index) =>
+      dispatch(actionTypes.removeFromCart(item, index)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);

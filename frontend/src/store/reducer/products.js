@@ -20,6 +20,17 @@ const productReducer = (state = initialState, action) => {
           totalPrice: (state.cart.totalPrice += action.payload.price),
         },
       };
+    case actionTypes.REMOVE_FROM_CART:
+      return {
+        ...state,
+        cart: {
+          ...state.cart,
+          items: state.cart.items.filter(
+            (item, index) => index !== action.payload.index
+          ),
+          totalPrice: (state.cart.totalPrice -= action.payload.item.price),
+        },
+      };
     default:
       return state;
   }
