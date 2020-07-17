@@ -13,7 +13,10 @@ class ProductList extends Component {
     return (
       <Row>
         {this.props.products.length < 1 ? (
-          <div className="mt-4 mr-auto ml-auto container">
+          <div
+            className="mt-4 container"
+            style={{ marginLeft: "auto", marginRight: "auto" }}
+          >
             <Spinner animation="border" />{" "}
           </div>
         ) : (
