@@ -8,12 +8,15 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const productRoutes = require("./routes/products");
 const authRoutes = require("./routes/auth");
+const mpesaRoutes = require("./routes/mpesa");
+const mpesaAuth = require("./middlewares/mpesaAuth");
 
 app.use(express.json());
 app.use(cors());
 app.use("/uploads", express.static("uploads"));
 app.use("/products", productRoutes);
 app.use("/auth", authRoutes);
+app.use("/mpesa", mpesaAuth, mpesaRoutes);
 
 app.use(async (req, res, next) => {
   next(createError.NotFound());
