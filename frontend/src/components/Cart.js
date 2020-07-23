@@ -1,9 +1,32 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, InputGroup, FormControl } from "react-bootstrap";
 import * as actionTypes from "../store/actions/actionTypes";
+import axios from "axios";
 
 class Cart extends Component {
+  state = {
+    phoneNumber: "",
+  };
+
+  handlePhoneNumber = (event) => {
+    this.setState({ phoneNumber: event.target.value });
+  };
+
+  handleMpesa = () => {
+    axios({
+      method: "POST",
+      url: "http://localhost:5000/mpesa/stk",
+      data: {
+        phoneNumber: `254${this.state.phoneNumber}`,
+      },
+    })
+      .then((res) => console.log(res.data))
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   render() {
     return (
       <>
@@ -43,7 +66,29 @@ class Cart extends Component {
                 </tr>
               </tbody>
             </Table>
-            <Button className="btn-sm btn-success">Checkout </Button>
+            <InputGroup
+              className="mb-3"
+              onChange={(event) => this.handlePhoneNumber(event)}
+            >
+              <InputGroup.Prepend>
+                <InputGroup.Text>254</InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl
+                placeholder="enter phone number.."
+                aria-label="enter phone number.."
+                aria-describedby="basic-addon2"
+              />
+            </InputGroup>
+            <Button
+              disabled={
+                this.state.phoneNumber.trim().length < 9 ||
+                this.state.phoneNumber.trim().length > 9
+              }
+              className="btn-sm btn-success"
+              onClick={() => this.handleMpesa()}
+            >
+              LipaNaMpesa
+            </Button>
           </div>
         )}
       </>
