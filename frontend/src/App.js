@@ -10,6 +10,7 @@ import SignUp from "./components/SignUp";
 import Cart from "./components/Cart";
 import { connect } from "react-redux";
 import * as actionTypes from "./store/actions/actionTypes";
+import PrivateRoute from "./utils/PrivateRoute"
 
 class App extends Component {
   componentDidMount() {
@@ -25,7 +26,7 @@ class App extends Component {
             <Route exact component={ProductList} path="/" />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={SignUp} />{" "}
-            <Route exact path="/cart" component={Cart} />
+            <PrivateRoute exact path="/cart" component={Cart} />
             <Route exact path="/products/:id" component={ProductDetails} />
           </Switch>
         </Container>
