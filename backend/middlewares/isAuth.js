@@ -14,6 +14,7 @@ module.exports = (req, res, next) => {
     }
     req.userId = payload.id;
     req.username = payload.username;
+    req.email = payload.email
     next();
   });
 };
