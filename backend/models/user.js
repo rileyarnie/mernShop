@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { type } = require("../validation/user");
 const schema = mongoose.Schema;
 
 const userSchema = new schema({
@@ -14,6 +15,12 @@ const userSchema = new schema({
     type: String,
     required: true,
   },
+  orders: [
+    {
+      type: schema.Types.ObjectId,
+      ref: "Order",
+    },
+  ],
 });
 
 module.exports = mongoose.model("User", userSchema);

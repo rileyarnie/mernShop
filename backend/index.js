@@ -11,6 +11,7 @@ const authRoutes = require("./routes/auth");
 const mpesaRoutes = require("./routes/mpesa");
 const mpesaAuth = require("./middlewares/mpesaAuth");
 const stripeRoutes = require("./routes/stripe");
+const orderRoutes = require("./routes/order");
 const isAuth = require("./middlewares/isAuth");
 
 app.use(express.json());
@@ -20,6 +21,7 @@ app.use("/products", productRoutes);
 app.use("/auth", authRoutes);
 app.use("/mpesa", mpesaAuth, mpesaRoutes);
 app.use("/checkout", isAuth, stripeRoutes);
+app.use("/create-order", isAuth, orderRoutes);
 
 app.use(async (req, res, next) => {
   next(createError.NotFound());

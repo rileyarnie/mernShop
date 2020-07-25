@@ -13,6 +13,7 @@ exports.register = async (req, res, next) => {
     username,
     email,
     password: hashedPassword,
+    
   });
 
   try {
