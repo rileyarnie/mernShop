@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 
-function CheckoutForm() {
+function CheckoutForm({ price }) {
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState("");
@@ -13,12 +13,13 @@ function CheckoutForm() {
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
     window
-      .fetch("http://localhost:5000/create-payment-intent", {
+      .fetch("http://localhost:5000/checkout/create-payment-intent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("access_token"),
         },
-        body: JSON.stringify({ items: [{ id: "xl-tshirt" }] }),
+        body: JSON.stringify({ price: price}),
       })
       .then((res) => {
         return res.json();
