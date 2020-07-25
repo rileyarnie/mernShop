@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { Table, Button, InputGroup, FormControl } from "react-bootstrap";
 import * as actionTypes from "../store/actions/actionTypes";
 import axios from "axios";
+import CheckoutForm from "./CheckoutForm";
 
 class Cart extends Component {
   state = {
@@ -66,29 +67,42 @@ class Cart extends Component {
                 </tr>
               </tbody>
             </Table>
-            <InputGroup
-              className="mb-3"
-              onChange={(event) => this.handlePhoneNumber(event)}
-            >
-              <InputGroup.Prepend>
-                <InputGroup.Text>254</InputGroup.Text>
-              </InputGroup.Prepend>
-              <FormControl
-                placeholder="enter phone number.."
-                aria-label="enter phone number.."
-                aria-describedby="basic-addon2"
-              />
-            </InputGroup>
-            <Button
-              disabled={
-                this.state.phoneNumber.trim().length < 9 ||
-                this.state.phoneNumber.trim().length > 9
-              }
-              className="btn-sm btn-success"
-              onClick={() => this.handleMpesa()}
-            >
-              LipaNaMpesa
-            </Button>
+            <div className="payments">
+              <div className="payments__mpesa">
+                <p className="text-muted mr-auto">
+                  enter number to trigger test mpesa request
+                </p>
+                <InputGroup
+                  style={{ placeContent: "center" }}
+                  className="mb-3"
+                  onChange={(event) => this.handlePhoneNumber(event)}
+                >
+                  <InputGroup.Prepend>
+                    <InputGroup.Text>254</InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <FormControl
+                    placeholder="enter phone number.."
+                    aria-label="enter phone number.."
+                    aria-describedby="basic-addon2"
+                    style={{ maxWidth: "250px" }}
+                  />
+                </InputGroup>
+                <Button
+                  disabled={
+                    this.state.phoneNumber.trim().length < 9 ||
+                    this.state.phoneNumber.trim().length > 9
+                  }
+                  className="btn-sm btn-success"
+                  onClick={() => this.handleMpesa()}
+                  style={{ marginLeft: "0px" }}
+                >
+                  LipaNaMpesa
+                </Button>
+              </div>
+              <div className="payments__stripe">
+                <CheckoutForm />
+              </div>
+            </div>
           </div>
         )}
       </>
