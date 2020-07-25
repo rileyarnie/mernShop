@@ -32,6 +32,7 @@ exports.register = async (req, res, next) => {
       {
         id: savedUser._id,
         username: savedUser.username,
+        email: savedUser.email,
       },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "30m" }
@@ -57,7 +58,7 @@ exports.login = async (req, res, next) => {
     }
 
     const access_token = await jwt.sign(
-      { id: user._id, username: user.username },
+      { id: user._id, username: user.username, email: user.email },
       process.env.ACCESS_TOKEN_SECRET,
       { expiresIn: "30m" }
     );
