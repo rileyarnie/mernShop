@@ -9,6 +9,12 @@ import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import rootReducer from "./store/reducer";
 import { BrowserRouter as Router } from "react-router-dom";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+const promise = loadStripe(
+  "pk_test_51H5wS1DH8Q25rkoajzsDtKdv9p5kXFbbRSTjFhEa73lJkKTOkgN8JfBNOzFCnv4z6aQFrSjB7y5KgucLic7wqOdr00YeSqECjH"
+);
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
@@ -20,7 +26,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router>
-        <App />
+        <Elements stripe={promise}>
+          <App />
+        </Elements>
       </Router>
     </Provider>
   </React.StrictMode>,
