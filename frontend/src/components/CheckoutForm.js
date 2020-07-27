@@ -27,7 +27,7 @@ function CheckoutForm({ price }) {
       .then((data) => {
         setClientSecret(data.clientSecret);
       });
-  }, []);
+  }, [price]);
 
   const cardStyle = {
     style: {
