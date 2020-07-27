@@ -114,7 +114,7 @@ function CheckoutForm({ price, cart }) {
       )}
       {/* Show a success message upon completion */}
       <p className={succeeded ? "result-message" : "result-message hidden"}>
-        Payment succeeded, see the result in your Refresh the page to pay again.
+        Payment succeeded.Refresh the page to pay again.
       </p>
       <p className="text-muted" style={{ fontSize: "10px", marginTop: "20px" }}>
         use credit card no 4242 4242 4242 4242 for test payment
