@@ -18,7 +18,10 @@ exports.createOrder = async (req, res, next) => {
 
   try {
     const savedOrder = await order.save();
-    console.log(savedOrder);
+    if (!savedOrder) {
+      throw createError.NotFound("order not saved");
+    }
+
     const user = await User.findById(req.userId);
     if (!user) {
       throw createError.NotFound("User not found");
@@ -29,8 +32,6 @@ exports.createOrder = async (req, res, next) => {
     if (!orderedBy) {
       throw createError.InternalServerError("couldn't save user");
     }
-    
-
     res.status(201).json(savedOrder);
   } catch (error) {
     return next(error);
