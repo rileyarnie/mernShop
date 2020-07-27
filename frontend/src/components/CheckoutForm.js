@@ -14,7 +14,7 @@ function CheckoutForm({ price, cart }) {
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
     window
-      .fetch("http://localhost:5000/checkout/create-payment-intent", {
+      .fetch("https://tranquil-reef-64022.herokuapp.com/checkout/create-payment-intent", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,7 +76,7 @@ function CheckoutForm({ price, cart }) {
       try {
         const order = await Axios({
           method: "POST",
-          url: "http://localhost:5000/create-order",
+          url: "https://tranquil-reef-64022.herokuapp.com/create-order",
           headers: {
             Authorization: "Bearer " + localStorage.getItem("access_token"),
           },

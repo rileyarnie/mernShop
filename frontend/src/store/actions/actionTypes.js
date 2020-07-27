@@ -1,7 +1,7 @@
 import * as actionTypes from "./actions";
 import axios from "axios";
 
-const BASE_URL = "http://localhost:5000/";
+const BASE_URL = "https://tranquil-reef-64022.herokuapp.com/";
 
 export const gettingProducts = () => (dispatch) => {
   const token = localStorage.getItem("access_token");

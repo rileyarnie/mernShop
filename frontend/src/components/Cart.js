@@ -17,7 +17,7 @@ class Cart extends Component {
   handleMpesa = () => {
     axios({
       method: "POST",
-      url: "http://localhost:5000/mpesa/stk",
+      url: "https://tranquil-reef-64022.herokuapp.com/mpesa/stk",
       data: {
         phoneNumber: `254${this.state.phoneNumber}`,
       },

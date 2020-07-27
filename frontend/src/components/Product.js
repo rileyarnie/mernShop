@@ -16,7 +16,7 @@ class Product extends Component {
           <Link to={"products/" + this.props.item._id}>
             <Card.Img
               variant="top"
-              src={`http://localhost:5000/${this.props.item.productImage}`}
+              src={`https://tranquil-reef-64022.herokuapp.com/${this.props.item.productImage}`}
               alt={this.props.item.name}
             />
           </Link>
