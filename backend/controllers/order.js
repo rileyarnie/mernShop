@@ -24,8 +24,12 @@ exports.createOrder = async (req, res, next) => {
       throw createError.NotFound("User not found");
     }
     user.orders.push(savedOrder);
-    const orderedBy = await user.save()
-    console.log(orderedBy);
+
+    const orderedBy = await user.save();
+    if (!orderedBy) {
+      throw createError.InternalServerError("couldn't save user");
+    }
+    
 
     res.status(201).json(savedOrder);
   } catch (error) {

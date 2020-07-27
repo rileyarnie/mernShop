@@ -100,7 +100,7 @@ class Cart extends Component {
                 </Button>
               </div>
               <div className="payments__stripe">
-                <CheckoutForm price={this.props.price} />
+                <CheckoutForm price={this.props.price}  cart={this.props.cart}/>
               </div>
             </div>
           </div>

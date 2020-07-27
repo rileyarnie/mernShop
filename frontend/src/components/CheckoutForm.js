@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
+import Axios from "axios";
 
-function CheckoutForm({ price }) {
+function CheckoutForm({ price, cart }) {
   const [succeeded, setSucceeded] = useState(false);
   const [error, setError] = useState(null);
   const [processing, setProcessing] = useState("");
@@ -19,7 +20,7 @@ function CheckoutForm({ price }) {
           "Content-Type": "application/json",
           Authorization: "Bearer " + localStorage.getItem("access_token"),
         },
-        body: JSON.stringify({ price: price}),
+        body: JSON.stringify({ price: price }),
       })
       .then((res) => {
         return res.json();
@@ -72,6 +73,21 @@ function CheckoutForm({ price }) {
       setError(null);
       setProcessing(false);
       setSucceeded(true);
+      try {
+        const order = await Axios({
+          method: "POST",
+          url: "http://localhost:5000/create-order",
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("access_token"),
+          },
+          data: {
+            items: cart,
+            totalPrice: price,
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
   return (
@@ -98,12 +114,7 @@ function CheckoutForm({ price }) {
       )}
       {/* Show a success message upon completion */}
       <p className={succeeded ? "result-message" : "result-message hidden"}>
-        Payment succeeded, see the result in your
-        <a href={`https://dashboard.stripe.com/test/payments`}>
-          {" "}
-          Stripe dashboard.
-        </a>{" "}
-        Refresh the page to pay again.
+        Payment succeeded, see the result in your Refresh the page to pay again.
       </p>
       <p className="text-muted" style={{ fontSize: "10px", marginTop: "20px" }}>
         use credit card no 4242 4242 4242 4242 for test payment
